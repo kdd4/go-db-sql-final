@@ -101,6 +101,8 @@ func main() {
 
 	db, err := sql.Open("sqlite", "./tracker.db")
 
+	defer db.Close()
+
 	if err != nil {
 		fmt.Println(err)
 		return

@@ -36,6 +36,8 @@ func TestAddGetDelete(t *testing.T) {
 
 	require.NoError(t, err)
 
+	defer db.Close()
+
 	store := NewParcelStore(db)
 	parcel := getTestParcel()
 
@@ -78,6 +80,8 @@ func TestSetAddress(t *testing.T) {
 
 	require.NoError(t, err)
 
+	defer db.Close()
+
 	store := NewParcelStore(db)
 	parcel := getTestParcel()
 
@@ -112,6 +116,8 @@ func TestSetStatus(t *testing.T) {
 
 	require.NoError(t, err)
 
+	defer db.Close()
+
 	store := NewParcelStore(db)
 	parcel := getTestParcel()
 
@@ -143,6 +149,8 @@ func TestGetByClient(t *testing.T) {
 	db, err := sql.Open("sqlite", "./tracker.db")
 
 	require.NoError(t, err)
+
+	defer db.Close()
 
 	store := NewParcelStore(db)
 
@@ -186,7 +194,7 @@ func TestGetByClient(t *testing.T) {
 		// убедитесь, что все посылки из storedParcels есть в parcelMap
 		// убедитесь, что значения полей полученных посылок заполнены верно
 
-		require.Contains(t, parcelMap, parcel.Number)
+		assert.Contains(t, parcelMap, parcel.Number)
 		assert.Equal(t, parcelMap[parcel.Number].Number, parcel.Number)
 		assert.Equal(t, parcelMap[parcel.Number].Client, parcel.Client)
 		assert.Equal(t, parcelMap[parcel.Number].Status, parcel.Status)
